@@ -5,7 +5,11 @@ import 'package:poducts/widgets/product_widget.dart';
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
   int currentPage = 1;
-  List<ProductWidget> products = [ProductWidget(image: 'assets/photo1.png', title: 'Razor Air-Hyper-Brisk'), ProductWidget(image: 'assets/pngwing 23.png', title: 'T-shirt')];
+  List<ProductWidget> products = [
+    const ProductWidget(
+        image: 'assets/photo1.png', title: 'Razor Air-Hyper-Brisk'),
+    const ProductWidget(image: 'assets/pngwing 23.png', title: 'T-shirt')
+  ];
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -16,9 +20,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(
-            widget.currentPage != 3 ? 'Add New Product' : 'Products List',
-            style: const TextStyle(
+          title: const Text('Add New Product',
+            style: TextStyle(
               fontSize: 24,
               color: Colors.black,
             ),
@@ -127,14 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-                      // الجزء المضاف (Product Image)
-                      if (widget.currentPage == 3)
-                        Column(
-                          children:
-                            widget.products
-                        ),
-                      if (widget.currentPage == 1 || widget.currentPage == 2)
-                        const AddProductWidget()
+                      const AddProductWidget()
                     ]))));
   }
 }

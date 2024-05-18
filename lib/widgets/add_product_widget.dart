@@ -1,5 +1,8 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:poducts/core/shared_data.dart';
 import 'package:poducts/dash_board_painter.dart';
+import 'package:poducts/widgets/pickImageBottomSheet.dart';
 
 class AddProductWidget extends StatelessWidget {
   const AddProductWidget({super.key});
@@ -33,46 +36,58 @@ class AddProductWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              Center(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints.tightFor(
-                      width: 260, height: 200),
-                  child: CustomPaint(
-                    painter: DashedBorderPainter(),
-                    child: const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.camera_alt,
-                          size: 50,
-                          color: Colors.grey,
-                        ),
-                        SizedBox(height: 4),
-                        Text(
-                          "Click to upload",
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Color.fromARGB(
-                                255, 112, 172, 114),
+              SharedData.productImage == null? InkWell(
+                onTap: () {
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (_) {
+                          return const PickImageBottomSheet();
+                        },
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20), topRight: Radius.circular(20))));
+                },
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints.tightFor(
+                        width: 260, height: 200),
+                    child: CustomPaint(
+                      painter: DashedBorderPainter(),
+                      child: const Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.camera_alt,
+                            size: 50,
+                            color: Colors.grey,
                           ),
-                        ),
-                        SizedBox(height: 1),
-                        Text(
-                          "or drag and drop",
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black,
+                          SizedBox(height: 4),
+                          Text(
+                            "Click to upload",
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Color.fromARGB(
+                                  255, 112, 172, 114),
+                            ),
                           ),
-                        ),
-                      ],
+                          SizedBox(height: 1),
+                          Text(
+                            "or drag and drop",
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
+              ): Image.file(File(SharedData.productImage)),
             ],
           ),
         ),
